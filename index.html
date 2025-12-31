@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="id">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <title>For My Prettiest 🎀</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+        <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Pacifico&family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+        <style>
+        :root { --hot-pink: #ff85a2; --berry: #fb6f92; --soft-pink: #ffc2d1; }
+        
+        * { 
+            scroll-behavior: smooth; 
+            cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24'><path fill='%23ff85a2' d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/></svg>"), auto !important;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            margin: 0; overflow-x: hidden;
+            animation: pinkFlow 10s infinite alternate ease-in-out;
+        }
+
+        @keyframes pinkFlow {
+            0% { background-color: #fff0f3; }
+            100% { background-color: #ffc2d1; }
+        }
+
+        section { 
+            min-height: 100vh; 
+            padding: 100px 20px 60px 20px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            position: relative;
+            z-index: 10;
+        }
+
+        .falling-item { 
+            position: fixed; top: -50px; pointer-events: none; z-index: -1; 
+            animation: fall linear forwards; 
+        }
+        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
+
+        #userNameDisplay {
+            font-family: 'Pacifico', cursive;
+            background: linear-gradient(to bottom, #ff85a2 0%, #fb6f92 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(2px 2px 0px white);
+        }
+
+        .spotify-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(15px);
+            border: 2px solid white;
+            border-radius: 30px;
+        }
+
+        .playlist-item {
+            display: flex; align-items: center; gap: 10px; padding: 10px;
+            border-radius: 15px; background: rgba(255, 255, 255, 0.5);
+            margin-bottom: 8px;
+        }
+        .playlist-active { background: var(--hot-pink) !important; color: white !important; }
+
+        .disc-animation { animation: rotate 6s linear infinite; animation-play-state: paused; }
+        .playing .disc-animation { animation-play-state: running; }
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        .closing-box {
+            background: white; border: 2px dashed #ffc2d1;
+            border-radius: 25px; padding: 25px; margin-top: 25px;
+        }
+
+        .letter {
+            display: inline-block;
+            animation: letterBounce 2s infinite ease-in-out;
+            background: linear-gradient(to bottom, #fb6f92, #ff85a2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        @keyframes letterBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .cute-nav {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50px; padding: 8px 20px;
+            display: flex; gap: 15px; font-size: 14px;
+        }
+        </style>
+    </head>
+    <body onclick="clickSpawn(event)">
+        <audio id="mainAudio" loop></audio>
+        <div id="welcome-screen" class="fixed inset-0 z-[10000] flex items-center justify-center bg-white text-center px-6">
+            <div class="animate__animated animate__fadeIn w-full">
+                <div class="text-7xl mb-4 animate-bounce">🧸</div>
+                <h1 class="text-4xl text-pink-500 mb-6" style="font-family: 'Pacifico', cursive;">Hello, Love!</h1>
+                <input
+                    type="text"
+                    id="inputNama"
+                    class="w-full max-w-xs px-6 py-4 rounded-full border-2 border-pink-100 text-center mb-6 outline-none bg-pink-50 font-bold text-pink-600"
+                    placeholder="put ur name here, my baby :p "
+                >
+                <button onclick="unlockEverything()" class="w-full max-w-xs bg-pink-400 text-white font-bold py-4 rounded-full shadow-lg">Enjoy sayang, semoga kamu suka✨</button>
+            </div>
+        </div>
+        <nav id="main-nav" class="fixed top-6 left-1/2 -translate-x-1/2 z-50 hidden w-max">
+            <div class="cute-nav">
+                <a href="#home" class="font-bold text-pink-500">Home</a>
+                <a href="#reason" class="font-bold text-pink-500">Story</a>
+                <a href="#memory" class="font-bold text-pink-500">About You, Zara.</a>
+                <a href="#secret" class="font-bold text-pink-700">🔐</a>
+            </div>
+        </nav>
+        <section id="home" class="justify-center text-center">
+            <div class="inline-block px-6 py-1 bg-white rounded-full text-pink-400 text-sm font-bold shadow-md mb-6 animate-pulse">HAPPY NEW YEAR 2025 🥂</div>
+            <h1 id="animatedTitle" class="text-5xl md:text-8xl mb-2" style="font-family: 'Pacifico', cursive;"></h1>
+            <h2 id="userNameDisplay" class="text-5xl md:text-7xl font-bold"></h2>
+            <div class="text-8xl font-bold text-white/40 mt-4">2025</div>
+        </section>
+        <section id="reason">
+            <h2 class="text-4xl text-pink-500 mb-10" style="font-family: 'Pacifico', cursive;">Reasons Why I Love You</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-4xl">
+                <script>
+                const stages = ["hi, peltama-tama,,,", "Tapi,,,", "aku suka semua tentang kamu tau!!!", "maybe u my savior? eak", "AMU KEYEN BANEDD!!", "Zara.", "bocil imupkuu", "JARA C BOCIL YANG CANTIKNA NDA MANUSIAWI", "iloveyou infinity <3"];
+                const icons = ['🧸','🎀','🌸','🍭','💖','✨','🥂','🏠','💍'];
+
+                // MASUKKAN PESAN BERBEDA UNTUK TIAP KOTAK DI SINI
+    const messages = [
+        "alasan aku buat sayang sama kamu sebenernya terlalu banyak, gaakan cukup buat aku ungkapin pake kata-kata. bahkan, tanpa ada alasanpun, aku bakal tetep cinta banget sama kamu ayang",
+        "dari awal aku deket sama kamu dan mulai suka sama kamu, aku bisa ngerasain kalo amu waktu itu beneran sayang sama aku. gatau kenapa ayang, tapi kayak rasa sayang kamu ke aku itu bisa nyampe ke aku. makasih yaa?? makasih banyak udah bikin aku ngerasa disayang. sekarang malah aku yang jauhhh lebih sayangg sama kamuu",
+        "aku suka semua hal yang ada di diri kamu, aku terima amu, aku sayang kamu dengan semua instrumen yang ada di diri kamu. baiknya amu, jelekna amu, cmwa tentang amu, aku suka dan sayang banget sama kamu. jadi kamu ctop ngerasa kurang yaa?? aku justru bersyukur banget punya kamu di hidup aku.",
+        "tapi serius deh, aku mau bilang makasih banyak karena amu udah lahir di dunia ini. kamu catu-catunya alasan aku bisa beltahan cejauh ini...makasih yaa?? maaf kalo adanya aku di hidup kamu malah jadi beban buat kamu :(",
+        "amu harus tau kalo aku selalu bangga banget sama kamu, semua yang udah kamu laluin, semua yang udah kamu capai, dan semua hal yang lagi kamu usahain. aku bangga banget sama kamuuu, makasih yaaa udah nemenin aku ngelewatin tahun ini sama kamu. kita lewatin bareng-bareng lagi buat kedepannya, mau ya?",
+        "aku sayang kamu karena kamu zara, cukup dari diri kamu sendiri. aku bakal selalu terima dan sayang banget sama kamu. jadi jangan segan sama aku otay? jangan mikil yang jeyek teyuss dacaall bocill bwuu ntut",
+        "makasih ya karena kamu udah jadi orang yang positif dan baik, mau itu sama aku ataupun sama lingkungan kamu. tetep jadi orang baik ya cantik? semoga kamu selalu di kelilingin hal-hal baik kedepannya, termasuk aku calah catuna hehe :(",
+        "JKAMU TU CANTIK BANED TWU NDA C, WAS ZZ..KALO AGY AKU PUJI JANGAN BILANG AMU B AJ B AJ, enak aj. PACAL AK NIY CANTIKNAA KEBANGETANN, KALO BICA AKU MWU PAMELIN AMU KE CELURUH DUNIAAAA",
+        "intinya, ini sedikit jawaban aku untuk pertanyaan amu ith (km sayang ak nd knp). xixixi. selamat tahun baru ya cantikku, semoga tahun depan banyak hal baik yang dateng ke kita. nda sabarr mwu sama amu teyussss, tungguin aku yaa?? aku juga mau bilang makasih banyak karena aku ngerasa tahun ini aku banyak cneng naa karena ada amuuu :("
+    ];
+
+    stages.forEach((title, i) => {
+        document.write(`
+            <div class="bg-white/95 rounded-2xl p-5 text-center border-2 border-white shadow-sm animate__animated animate__fadeInUp">
+                <div class="text-4xl mb-2">${icons[i]}</div>
+                <h3 class="font-bold text-pink-500 text-lg">${title}</h3>
+                <p class="text-[11px] text-gray-400 italic mt-2 leading-relaxed">
+                    "${messages[i]}"
+                </p>
+            </div>
+        `);
+    });
+                </script>
+            </div>
+        </section>
+        <section id="memory">
+            <h2 class="text-4xl text-pink-500 mb-10" style="font-family: 'Pacifico', cursive;">About my baby, zara</h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 w-full max-w-4xl">
+                <script>
+    // 1. Daftar data untuk galeri (Nama file di folder img & teks unik)
+   const galleryData = [
+    { 
+        img: "img/1.jpg", 
+        title: "ultah ijey, 29 july 2025.", // Judul khusus kotak 1
+        text: "maaf kalo alay, tapi pas aku ultah aku benelan ngerasa seseneng itu sama amu. aku ngerasa diinget dan di pelhatiin sama amu. makasih ya sayang?" 
+    },
+    { 
+        img: "img/9.jpg", 
+        title: "Ultah amu,,,AKU BAKAL SELALU INGET INII", // Judul khusus kotak 2
+        text: "maaf ya ayang, walaupun aku ad tantrum na pas ini. tapi aku inget baned aku nyiapin cmwa na bwat amu, aku mwu kamu ngerasa seneng. aku mwu kamu happy sama aku apalagi di hari spesial kamu, tpi aku mcih ada ad jelekna yaa? maaf yaa? :( TAPI WAKTU IT AK BENELAN EXCITED BANED SAMA ULTAH AMU HIKSS. nd sbal nunggu ultah amu agy,,, CYAPA MWU IPAADDDD :p" 
+    },
+    { 
+        img: "img/2.jpg", 
+        title: "Kamu agy ngambek", // Judul khusus kotak 3
+        text: "hehehe, kamu kalo lagi ngambek ceyem baned cayangg. campai-campai aku clalu takut amu benelan bakal ninggalin aku :( aku clalu takut cama apa yang bakal amu bilang ke aku, hiks. tapi kadang amu ada gemec2 na gitu kadang ak pengen kokop amu aj pas amu agy mayah2. aku cayang amu baned sayangkuu, maafin aku suka bikin kamu marah yaa??" 
+    },
+    { 
+        img: "img/8.jpg", 
+        title: "I love you. Three Words, Infinite Meaning", // Judul khusus kotak 4
+        text: "hal yang selalu aku inget, dari dulu sampe sekarang. kepala aku clalu berisik, rasana kayak gapelnah tenang. tapi pas sama amu, kamu beneran bisa bikin aku tenang banget. kamu bener2 bikin aku ngerasa pulang. rasanya semuanya bakal baik2 aja selama ada kamu :(" 
+    },
+    { 
+        img: "img/10.jpg", 
+        title: "My Everything.", // Judul khusus kotak 5
+        text: "makasih ya ayang, makasih udah mau ngelewatin semuanya sama aku. makasih kamu udah tetep disini sama aku. buat kedepannya tetep bareng2 ya sayang? mwu amu cemarah apapun pwic jangan tinggalin aku hiks" 
+    },
+    { 
+        img: "img/5.jpg", 
+        title: "cerita kita banyak naik turunnya ya? but, Happy New Year baby ", // Judul khusus kotak 6
+        text: "maaf ya kalo ngejalanin sama aku ga selalu mulus, maaf masih ada berantem nya. maaf masih bikin kamu nangis dan kesel gara2 aku. maaf aku masih ga becus jadi cowok kamu. maaf aku masih banyak kurangnya juga. maafin aku ya? aku janji bakal lebih banyak belajar lagi, aku bakal berusaha buat bisa lebih baik lagi kedepannya ayang." 
+    },
+    { 
+        img: "img/7.jpg", 
+        title: "My Prettiest Lady, Zara", // Judul khusus kotak 6
+        text: "Makasih banyak buat semua hal yang udah kamu usahain buat aku. makasih buat semua sabar dan maaf kamu. aku sayang banget sama kamu, aku gatau harus gimana lagi biar kamu percaya sama perasaan aku. tapi aku sendiri gaperna punya rasa sayang segede ini sama orang, even itu sama diri aku sendiri. tetep sama aku terus kedepannya ya? lewatin semuanya bareng aku lagi. i love you endlessly forever and always zaraaa" 
+    },
+    { 
+        img: "img/11.jpg", 
+        title: "Our Forever Continues", // Judul khusus kotak 6
+        text: "Every day with you is a new memory to cherish. I can't wait to create countless more beautiful moments together. You are my forever. hehehe, maaf alay. but, kamu harus tau kalo perasaan aku ke kamu selalu konsisten naik, aku gaakan nakal ataupun berubah. jadi amu jangan khawatir ya? CMANGAT BUAT KITA DI TAHUN DEPANN HIKSROOTTT." 
+    }
+];
+
+    // 2. Tampilkan data ke dalam kartu
+  galleryData.forEach((item, i) => {
+    document.write(`
+        <div class="bg-white rounded-2xl p-2 border border-white shadow-md">
+            <div class="aspect-square rounded-xl overflow-hidden mb-2">
+                <img src="${item.img}" class="w-full h-full object-cover" alt="${item.title}">
+            </div>
+            <p class="text-[11px] text-pink-500 font-bold text-center mb-1">
+                ${item.title}
+            </p>
+            <p class="text-[9px] text-gray-400 italic text-center px-1 leading-tight">
+                "${item.text}"
+            </p>
+        </div>
+    `);
+});
+                </script>
+            </div>
+        </section>
+        <section id="secret">
+            <div id="password-gate" class="text-center bg-white p-10 rounded-[30px] shadow-xl w-full max-w-xs border-2 border-pink-50">
+                <h2 class="text-3xl text-pink-500 mb-6" style="font-family: 'Pacifico', cursive;">Secret Vault</h2>
+                <input
+                    type="password"
+                    id="secretPass"
+                    class="w-full px-6 py-3 rounded-full border-2 border-pink-100 text-center mb-6 outline-none"
+                    placeholder="Password?"
+                >
+                <button onclick="checkPass()" class="w-full bg-pink-400 text-white font-bold py-3 rounded-full shadow-lg">Buka 🔐</button>
+            </div>
+            <div id="secret-content" class="hidden w-full max-w-4xl">
+                <div class="spotify-card p-6 flex flex-col gap-6" id="playerWrapper">
+                    <div class="flex flex-col items-center text-center p-4 bg-white/60 rounded-2xl">
+                        <div class="w-40 h-40 rounded-full border-[6px] border-white shadow-xl overflow-hidden disc-animation mb-6">
+                            <img id="trackCover" src="https://picsum.photos/300/300?random=1" class="w-full h-full object-cover">
+                        </div>
+                        <h3 id="trackTitle" class="text-xl font-bold text-pink-600 mb-1">Pilih Lagu</h3>
+                        <div class="w-full mt-2 p-4 bg-white/90 rounded-xl border border-pink-100">
+                            <p id="trackQuote" class="text-pink-700 italic text-sm font-semibold">"Klik salah satu lagu di bawah ya..."</p>
+                        </div>
+                    </div>
+                    <div class="bg-white/40 p-4 rounded-2xl overflow-y-auto max-h-[250px]">
+                        <h3 class="font-bold text-lg text-pink-600 mb-4">Our Playlist 🎧</h3>
+                        <div id="playlistContainer"></div>
+                    </div>
+                </div>
+                <div class="closing-box text-center animate__animated animate__fadeInUp">
+                    <h3 class="text-2xl text-pink-500 mb-3" style="font-family: 'Pacifico', cursive;">cdikit yapping dari ijey</h3>
+                    <p class="text-pink-800 italic text-sm leading-relaxed font-semibold">
+                        "selamat tahun baru sayangkuu. aku bangga banget sama kamu sampe sekarang, makasih banyak buat semua hal yang udah kamu lakuin baik itu buat aku, diri kamu sendiri, atau bahkan buat orang lain. makasih yaa walaupun hidup aku ga begitu mulus, tapi aku ketemu manusia seindah kamuu,,, hehehe tpi aku serius. aku bersyukur banget punya kamu. tetep sayang sama aku terus yaa?? jangan beyubah yaa ayang :(. iloveyou sososo incredibly much sayangnyaa ijeeyy. HAPPY NEW YEAR YEYEYEYEY!!! ANOTHER YEAR WITH JARAAJAR :p 💖✨"
+                    </p>
+                    <div class="mt-4 text-4xl">💍💐</div>
+                </div>
+            </div>
+        </section>
+        <script>
+        const songData = [
+    { 
+        title: "Home", 
+        src: "music/home.mp3", 
+        cover: "img/7.jpg", // Ganti dengan path folder img kamu
+        quote: "makasih udah selalu jadi rumah aku buat pulang" 
+    },
+    { 
+        title: "cihuy", 
+        src: "music/coldplay.mp3", 
+        cover: "img/3.jpg", // Pastikan nama file sesuai (misal: cover2.jpg)
+        quote: "aku sayang kamu banget, makasih udah jadi tempat yang bikin aku tenang ayang" 
+    },
+    { 
+        title: "mwehehehe", 
+        src: "music/keshi.mp3", 
+        cover: "img/4.jpg", // Contoh jika menggunakan format .png
+        quote: "makasih banyak buat semua sabar dan maaf kamu selama ini,,,maaf aku masih harus banyak belajar :( ✨" 
+    },
+    { 
+        title: "cdah keyen byum", 
+        src: "music/basket.mp3", 
+        cover: "img/12.jpg", // Contoh jika menggunakan format .png
+        quote: "CMOGA KAMU HAPPYYYY YAAA✨" 
+    },
+    { 
+        title: "fallingforyou", 
+        src: "music/fallingforyou.mp3", 
+        cover: "img/1.jpg", // Contoh jika menggunakan format .png
+        quote: "kalo aku lagi kangen banget sama kamu, aku suka dengerin ini. makasih ya ayang buat semuanyaaa. aku selalu sayang banget sama kamu✨" 
+    }
+];
+
+        const audio = document.getElementById('mainAudio');
+
+        function unlockEverything() {
+            const n = document.getElementById('inputNama').value;
+            if(!n) return alert("Panggilannya diisi dulu ya sayang! 🎀");
+            document.getElementById('userNameDisplay').innerText = n;
+            document.getElementById('welcome-screen').classList.add('animate__animated', 'animate__fadeOutUp');
+            audio.src = songData[0].src; audio.play().catch(() => {});
+            setTimeout(() => {
+                document.getElementById('welcome-screen').style.display = 'none';
+                document.getElementById('main-nav').classList.remove('hidden');
+                animateTitle(); initPlaylist();
+                setInterval(createFallingItem, 400);
+                confetti();
+            }, 800);
+        }
+
+        function initPlaylist() {
+            const container = document.getElementById('playlistContainer');
+            container.innerHTML = "";
+            songData.forEach((s, i) => {
+                const div = document.createElement('div');
+                div.className = "playlist-item";
+                div.innerHTML = `<div class="w-8 h-8 bg-pink-200 rounded-md overflow-hidden"><img src="${s.cover}" class="w-full h-full object-cover"></div><p class="font-bold text-[12px] flex-1 text-left">${s.title}</p><span>▶️</span>`;
+                div.onclick = () => {
+                    audio.src = s.src; audio.play();
+                    document.getElementById('trackTitle').innerText = s.title;
+                    document.getElementById('trackCover').src = s.cover;
+                    document.getElementById('trackQuote').innerText = s.quote;
+                    document.getElementById('playerWrapper').classList.add('playing');
+                    document.querySelectorAll('.playlist-item').forEach(el => el.classList.remove('playlist-active'));
+                    div.classList.add('playlist-active');
+                };
+                container.appendChild(div);
+            });
+            document.getElementById('trackTitle').innerText = songData[0].title;
+            document.getElementById('trackCover').src = songData[0].cover;
+            document.getElementById('trackQuote').innerText = songData[0].quote;
+            document.getElementById('playerWrapper').classList.add('playing');
+            document.querySelectorAll('.playlist-item')[0].classList.add('playlist-active');
+        }
+
+        function animateTitle() {
+            const title = "Happy New Year";
+            const container = document.getElementById('animatedTitle');
+            title.split("").forEach((char, i) => {
+                const span = document.createElement('span');
+                span.innerText = char === " " ? "\u00A0" : char;
+                span.className = "letter text-4xl";
+                span.style.animationDelay = `${i * 0.1}s`;
+                container.appendChild(span);
+            });
+        }
+
+        function createFallingItem() {
+            const items = ['🧸', '🎀', '💖', '🌸'];
+            const item = document.createElement('div');
+            item.className = 'falling-item';
+            item.innerHTML = items[Math.floor(Math.random() * items.length)];
+            item.style.left = Math.random() * 90 + 'vw';
+            item.style.fontSize = '20px';
+            item.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            document.body.appendChild(item);
+            setTimeout(() => item.remove(), 7000);
+        }
+
+        function clickSpawn(e) {
+            const icon = document.createElement('div');
+            icon.style.position = 'fixed'; icon.style.zIndex = '9999'; icon.innerText = '💖';
+            icon.style.left = e.clientX + 'px'; icon.style.top = e.clientY + 'px';
+            icon.classList.add('animate__animated', 'animate__zoomOutUp');
+            document.body.appendChild(icon);
+            setTimeout(() => icon.remove(), 1000);
+        }
+
+        function checkPass() {
+            if(document.getElementById('secretPass').value === "ilysm") {
+                document.getElementById('password-gate').classList.add('hidden');
+                document.getElementById('secret-content').classList.remove('hidden');
+                confetti();
+            } else { alert("Coba inget lagi passwordnya sayang... 😋"); }
+        }
+        </script>
+    </body>
+</html>

@@ -38,15 +38,6 @@
             z-index: 10;
         }
 
-        /* --- Animasi Kartu --- */
-        .hover-card {
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .hover-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 25px -5px rgba(255, 133, 162, 0.2);
-        }
-
         .falling-item { 
             position: fixed; top: -50px; pointer-events: none; z-index: -1; 
             animation: fall linear forwards; 
@@ -68,27 +59,36 @@
             border-radius: 30px;
         }
 
-        /* --- Modal Zoom --- */
-        #photo-modal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            z-index: 10001;
-            background: rgba(255, 240, 243, 0.9);
-            backdrop-filter: blur(8px);
-            padding: 20px;
-            align-items: center;
-            justify-content: center;
+        /* --- ANIMASI CARD & HOVER --- */
+        .cute-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .cute-card:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 20px 25px -5px rgba(255, 133, 162, 0.2);
+            border-color: var(--hot-pink);
         }
 
+        /* --- MODAL ZOOM FOTO --- */
+        #zoom-modal {
+            display: none; position: fixed; inset: 0; z-index: 10001;
+            background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(8px);
+            align-items: center; justify-content: center; padding: 20px;
+        }
         .modal-content {
-            max-width: 500px;
-            width: 100%;
-            background: white;
-            padding: 20px;
-            border-radius: 30px;
-            box-shadow: 0 25px 50px -12px rgba(255, 133, 162, 0.3);
-            text-align: center;
+            background: white; padding: 20px; border-radius: 30px;
+            max-width: 500px; width: 100%; text-align: center;
+        }
+
+        /* --- TOMBOL MUTE SPEAKER --- */
+        #mute-btn {
+            position: fixed; top: 20px; right: 20px; z-index: 10002;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(5px);
+            width: 45px; height: 45px; border-radius: 50%;
+            display: none; align-items: center; justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border: 2px solid var(--soft-pink);
         }
 
         .playlist-item {
@@ -128,45 +128,46 @@
     </head>
     <body onclick="clickSpawn(event)">
         <audio id="mainAudio" loop></audio>
-
-        <div id="photo-modal" onclick="closeModal()">
+        <button id="mute-btn" onclick="toggleMute()">
+            <span id="speaker-icon" style="font-size: 20px;">🔊</span>
+        </button>
+        <div id="zoom-modal" onclick="closeModal()">
             <div class="modal-content animate__animated animate__zoomIn" onclick="event.stopPropagation()">
-                <div class="rounded-2xl overflow-hidden mb-4 shadow-lg">
-                    <img id="modal-img" src="" class="w-full object-cover">
-                </div>
-                <h3 id="modal-title" class="text-xl font-bold text-pink-500 mb-2"></h3>
-                <p id="modal-text" class="text-gray-700 italic leading-relaxed"></p>
-                <button onclick="closeModal()" class="mt-6 bg-pink-400 text-white px-6 py-2 rounded-full font-bold">Tutup 🌸</button>
+                <img id="zoom-img" src="" class="w-full rounded-2xl mb-4 shadow-md">
+                <h3 id="zoom-title" class="text-xl font-bold text-pink-500 mb-2"></h3>
+                <p id="zoom-text" class="text-gray-700 italic leading-relaxed"></p>
+                <button onclick="closeModal()" class="mt-4 bg-pink-400 text-white px-6 py-2 rounded-full font-bold shadow-md">Tutup 🌸</button>
             </div>
         </div>
-
         <div id="welcome-screen" class="fixed inset-0 z-[10000] flex items-center justify-center bg-white text-center px-6">
             <div class="animate__animated animate__fadeIn w-full">
                 <div class="text-7xl mb-4 animate-bounce">🧸</div>
                 <h1 class="text-4xl text-pink-500 mb-6" style="font-family: 'Pacifico', cursive;">Hello, Love!</h1>
-                <input type="text" id="inputNama" class="w-full max-w-xs px-6 py-4 rounded-full border-2 border-pink-100 text-center mb-6 outline-none bg-pink-50 font-bold text-pink-600" placeholder="put ur name here, my baby :p ">
+                <input
+                    type="text"
+                    id="inputNama"
+                    class="w-full max-w-xs px-6 py-4 rounded-full border-2 border-pink-100 text-center mb-6 outline-none bg-pink-50 font-bold text-pink-600"
+                    placeholder="put ur name here, my baby :p "
+                >
                 <button onclick="unlockEverything()" class="w-full max-w-xs bg-pink-400 text-white font-bold py-4 rounded-full shadow-lg">Enjoy sayang, semoga kamu suka✨</button>
             </div>
         </div>
-
         <nav id="main-nav" class="fixed top-6 left-1/2 -translate-x-1/2 z-50 hidden w-max">
             <div class="cute-nav">
                 <a href="#home" class="font-bold text-pink-500">Home</a>
                 <a href="#reason" class="font-bold text-pink-500">Story</a>
-                <a href="#memory" class="font-bold text-pink-500">About Zara.</a>
+                <a href="#memory" class="font-bold text-pink-500">About You, Zara.</a>
                 <a href="#secret" class="font-bold text-pink-700">🔐</a>
             </div>
         </nav>
-
         <section id="home" class="justify-center text-center">
             <div class="inline-block px-6 py-1 bg-white rounded-full text-pink-400 text-sm font-bold shadow-md mb-6 animate-pulse">HAPPY NEW YEAR 2025 🥂</div>
             <h1 id="animatedTitle" class="text-5xl md:text-8xl mb-2" style="font-family: 'Pacifico', cursive;"></h1>
             <h2 id="userNameDisplay" class="text-5xl md:text-7xl font-bold"></h2>
             <div class="text-8xl font-bold text-white/40 mt-4">2025</div>
         </section>
-
         <section id="reason">
-            <h2 class="text-4xl text-pink-500 mb-10" style="font-family: 'Pacifico', cursive;">Reasons Why I Love You</h2>
+            <h2 class="text-4xl text-pink-500 mb-10 text-center" style="font-family: 'Pacifico', cursive;">Reasons Why I Love You</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-4xl">
                 <script>
                 const stages = ["hi, peltama-tama,,,", "Tapi,,,", "aku suka semua tentang kamu tau!!!", "maybe u my savior? eak", "AMU KEYEN BANEDD!!", "Zara.", "bocil imupkuu", "JARA C BOCIL YANG CANTIKNA NDA MANUSIAWI", "iloveyou infinity <3"];
@@ -185,10 +186,10 @@
 
                 stages.forEach((title, i) => {
                     document.write(`
-                        <div class="hover-card bg-white/95 rounded-3xl p-6 text-center border-2 border-white shadow-lg">
+                        <div class="cute-card bg-white/95 rounded-2xl p-6 text-center border-2 border-white shadow-md animate__animated animate__fadeInUp">
                             <div class="text-5xl mb-3">${icons[i]}</div>
-                            <h3 class="font-bold text-pink-500 text-xl mb-3">${title}</h3>
-                            <p class="text-[13px] text-gray-700 font-medium italic leading-relaxed">
+                            <h3 class="font-bold text-pink-500 text-lg mb-2">${title}</h3>
+                            <p class="text-[13px] text-gray-700 font-semibold italic leading-relaxed">
                                 "${messages[i]}"
                             </p>
                         </div>
@@ -197,30 +198,31 @@
                 </script>
             </div>
         </section>
-
         <section id="memory">
-            <h2 class="text-4xl text-pink-500 mb-10" style="font-family: 'Pacifico', cursive;">About my baby, zara</h2>
+            <h2 class="text-4xl text-pink-500 mb-10 text-center" style="font-family: 'Pacifico', cursive;">About my baby, zara</h2>
             <div class="grid grid-cols-2 md:grid-cols-3 gap-5 w-full max-w-4xl">
                 <script>
                 const galleryData = [
                     { img: "img/1.jpg", title: "ultah ijey, 29 july 2025.", text: "maaf kalo alay, tapi pas aku ultah aku benelan ngerasa seseneng itu sama amu. aku ngerasa diinget dan di pelhatiin sama amu. makasih ya sayang?" },
                     { img: "img/9.jpg", title: "Ultah amu", text: "maaf ya ayang, walaupun aku ad tantrum na pas ini. tapi aku inget baned aku nyiapin cmwa na bwat amu, aku mwu kamu ngerasa seneng. aku mwu kamu happy sama aku apalagi di hari spesial kamu!" },
-                    { img: "img/2.jpg", title: "Kamu agy ngambek", text: "hehehe, kamu kalo lagi ngambek ceyem baned cayangg. campai-campai aku clalu takut amu benelan bakal ninggalin aku :(" },
-                    { img: "img/8.jpg", title: "I love you.", text: "hal yang selalu aku inget, dari dulu sampe sekarang. kamu bener2 bikin aku ngerasa pulang. rasanya semuanya bakal baik2 aja selama ada kamu :(" },
-                    { img: "img/10.jpg", title: "My Everything.", text: "makasih ya ayang, makasih udah mau ngelewatin semuanya sama aku. makasih kamu udah tetep disini sama aku." },
-                    { img: "img/5.jpg", title: "Happy New Year", text: "maaf ya kalo ngejalanin sama aku ga selalu mulus, maaf masih ada berantem nya. aku janji bakal lebih banyak belajar lagi buat amu." },
-                    { img: "img/7.jpg", title: "My Prettiest Lady", text: "aku gatau harus gimana lagi biar kamu percaya sama perasaan aku. tapi aku sendiri gaperna punya rasa sayang segede ini sama orang." },
-                    { img: "img/11.jpg", title: "Our Forever", text: "Every day with you is a new memory to cherish. CMANGAT BUAT KITA DI TAHUN DEPANN HIKSROOTTT." }
+                    { img: "img/2.jpg", title: "Kamu agy ngambek", text: "hehehe, kamu kalo lagi ngambek ceyem baned cayangg. campai-campai aku clalu takut amu benelan bakal ninggalin aku :( aku clalu takut cama apa yang bakal amu bilang ke aku, hiks. tapi kadang amu ada gemec2 na gitu kadang ak pengen kokop amu aj pas amu agy mayah2." },
+                    { img: "img/8.jpg", title: "I love you.", text: "hal yang selalu aku inget, dari dulu sampe sekarang. kepala aku clalu berisik, rasana kayak gapelnah tenang. tapi pas sama amu, kamu beneran bisa bikin aku tenang banget. kamu bener2 bikin aku ngerasa pulang." },
+                    { img: "img/10.jpg", title: "My Everything.", text: "makasih ya ayang, makasih udah mau ngelewatin semuanya sama aku. makasih kamu udah tetep disini sama aku. buat kedepannya tetep bareng2 ya sayang?" },
+                    { img: "img/5.jpg", title: "Happy New Year baby", text: "maaf ya kalo ngejalanin sama aku ga selalu mulus, maaf masih ada berantem nya. maaf masih bikin kamu nangis dan kesel gara2 aku. aku janji bakal lebih banyak belajar lagi, aku bakal berusaha buat bisa lebih baik lagi." },
+                    { img: "img/7.jpg", title: "My Prettiest Lady, Zara", text: "Makasih banyak buat semua hal yang udah kamu usahain buat aku. makasih buat semua sabar dan maaf kamu. aku sayang banget sama kamu, i love you endlessly forever and always zaraaa" },
+                    { img: "img/11.jpg", title: "Our Forever Continues", text: "Every day with you is a new memory to cherish. I can't wait to create countless more beautiful moments together. CMANGAT BUAT KITA DI TAHUN DEPANN HIKSROOTTT." }
                 ];
 
                 galleryData.forEach((item, i) => {
                     document.write(`
-                        <div class="hover-card bg-white rounded-3xl p-3 border-2 border-white shadow-md" onclick="zoomPhoto('${item.img}', '${item.title.replace(/'/g, "\\'")}', '${item.text.replace(/'/g, "\\'")}')">
-                            <div class="aspect-square rounded-2xl overflow-hidden mb-3 shadow-inner">
+                        <div class="cute-card bg-white rounded-3xl p-3 border-2 border-white shadow-md flex flex-col" onclick="openZoom('${item.img}', '${item.title.replace(/'/g, "\\'")}', '${item.text.replace(/'/g, "\\'")}')">
+                            <div class="aspect-square rounded-2xl overflow-hidden mb-3 shadow-inner shrink-0">
                                 <img src="${item.img}" class="w-full h-full object-cover">
                             </div>
-                            <p class="text-[12px] text-pink-600 font-bold text-center mb-1 truncate px-1">${item.title}</p>
-                            <p class="text-[10px] text-gray-700 font-semibold italic text-center px-1 leading-tight line-clamp-2">
+                            <p class="text-[12px] text-pink-600 font-bold text-center mb-1 leading-tight px-1">
+                                ${item.title}
+                            </p>
+                            <p class="text-[10px] text-gray-700 font-semibold italic text-center px-1 leading-relaxed">
                                 "${item.text}"
                             </p>
                         </div>
@@ -229,11 +231,15 @@
                 </script>
             </div>
         </section>
-
         <section id="secret">
             <div id="password-gate" class="text-center bg-white p-10 rounded-[30px] shadow-xl w-full max-w-xs border-2 border-pink-50">
                 <h2 class="text-3xl text-pink-500 mb-6" style="font-family: 'Pacifico', cursive;">Secret Vault</h2>
-                <input type="password" id="secretPass" class="w-full px-6 py-3 rounded-full border-2 border-pink-100 text-center mb-6 outline-none" placeholder="Password?">
+                <input
+                    type="password"
+                    id="secretPass"
+                    class="w-full px-6 py-3 rounded-full border-2 border-pink-100 text-center mb-6 outline-none"
+                    placeholder="Password?"
+                >
                 <button onclick="checkPass()" class="w-full bg-pink-400 text-white font-bold py-3 rounded-full shadow-lg">Buka 🔐</button>
             </div>
             <div id="secret-content" class="hidden w-full max-w-4xl">
@@ -254,34 +260,46 @@
                 </div>
                 <div class="closing-box text-center animate__animated animate__fadeInUp">
                     <h3 class="text-2xl text-pink-500 mb-3" style="font-family: 'Pacifico', cursive;">cdikit yapping dari ijey</h3>
-                    <p class="text-pink-800 italic text-sm leading-relaxed font-bold">
-                        "selamat tahun baru sayangkuu. aku bangga banget sama kamu sampe sekarang... iloveyou sososo incredibly much sayangnyaa ijeeyy. HAPPY NEW YEAR YEYEYEYEY!!! ANOTHER YEAR WITH JARAAJAR :p 💖✨"
+                    <p class="text-pink-800 italic text-sm leading-relaxed font-semibold">
+                        "selamat tahun baru sayangkuu. aku bangga banget sama kamu sampe sekarang, makasih banyak buat semua hal yang udah kamu lakuin baik itu buat aku, diri kamu sendiri, atau bahkan buat orang lain. makasih yaa walaupun hidup aku ga begitu mulus, tapi aku ketemu manusia seindah kamuu,,, hehehe tpi aku serius. aku bersyukur banget punya kamu. tetep sayang sama aku terus yaa?? jangan beyubah yaa ayang :(. iloveyou sososo incredibly much sayangnyaa ijeeyy. HAPPY NEW YEAR YEYEYEYEY!!! ANOTHER YEAR WITH JARAAJAR :p 💖✨"
                     </p>
                     <div class="mt-4 text-4xl">💍💐</div>
                 </div>
             </div>
         </section>
-
         <script>
         const songData = [
             { title: "Home", src: "music/home.mp3", cover: "img/7.jpg", quote: "makasih udah selalu jadi rumah aku buat pulang" },
             { title: "cihuy", src: "music/coldplay.mp3", cover: "img/3.jpg", quote: "aku sayang kamu banget, makasih udah jadi tempat yang bikin aku tenang ayang" },
-            { title: "mwehehehe", src: "music/keshi.mp3", cover: "img/4.jpg", quote: "makasih banyak buat semua sabar dan maaf kamu selama ini..." },
+            { title: "mwehehehe", src: "music/keshi.mp3", cover: "img/4.jpg", quote: "makasih banyak buat semua sabar dan maaf kamu selama ini,,,maaf aku masih harus banyak belajar :( ✨" },
             { title: "cdah keyen byum", src: "music/basket.mp3", cover: "img/12.jpg", quote: "CMOGA KAMU HAPPYYYY YAAA✨" },
-            { title: "fallingforyou", src: "music/fallingforyou.mp3", cover: "img/1.jpg", quote: "kalo aku lagi kangen banget sama kamu, aku suka dengerin ini." }
+            { title: "fallingforyou", src: "music/fallingforyou.mp3", cover: "img/1.jpg", quote: "kalo aku lagi kangen banget sama kamu, aku suka dengerin ini. makasih ya ayang buat semuanyaaa. aku selalu sayang banget sama kamu✨" }
         ];
 
         const audio = document.getElementById('mainAudio');
+        const muteBtn = document.getElementById('mute-btn');
+        const speakerIcon = document.getElementById('speaker-icon');
 
-        function zoomPhoto(img, title, text) {
-            document.getElementById('modal-img').src = img;
-            document.getElementById('modal-title').innerText = title;
-            document.getElementById('modal-text').innerText = text;
-            document.getElementById('photo-modal').style.display = 'flex';
+        /* MODAL FUNCTIONS */
+        function openZoom(img, title, text) {
+            document.getElementById('zoom-img').src = img;
+            document.getElementById('zoom-title').innerText = title;
+            document.getElementById('zoom-text').innerText = text;
+            document.getElementById('zoom-modal').style.display = 'flex';
+        }
+        function closeModal() {
+            document.getElementById('zoom-modal').style.display = 'none';
         }
 
-        function closeModal() {
-            document.getElementById('photo-modal').style.display = 'none';
+        /* MUTE FUNCTION */
+        function toggleMute() {
+            if (audio.muted) {
+                audio.muted = false;
+                speakerIcon.innerText = "🔊";
+            } else {
+                audio.muted = true;
+                speakerIcon.innerText = "🔇";
+            }
         }
 
         function unlockEverything() {
@@ -289,6 +307,10 @@
             if(!n) return alert("Panggilannya diisi dulu ya sayang! 🎀");
             document.getElementById('userNameDisplay').innerText = n;
             document.getElementById('welcome-screen').classList.add('animate__animated', 'animate__fadeOutUp');
+            
+            // Tampilkan tombol mute
+            muteBtn.style.display = "flex";
+
             audio.src = songData[0].src; audio.play().catch(() => {});
             setTimeout(() => {
                 document.getElementById('welcome-screen').style.display = 'none';

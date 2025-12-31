@@ -38,6 +38,15 @@
             z-index: 10;
         }
 
+        /* --- Animasi Kartu --- */
+        .hover-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .hover-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 25px -5px rgba(255, 133, 162, 0.2);
+        }
+
         .falling-item { 
             position: fixed; top: -50px; pointer-events: none; z-index: -1; 
             animation: fall linear forwards; 
@@ -57,6 +66,29 @@
             backdrop-filter: blur(15px);
             border: 2px solid white;
             border-radius: 30px;
+        }
+
+        /* --- Modal Zoom --- */
+        #photo-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 10001;
+            background: rgba(255, 240, 243, 0.9);
+            backdrop-filter: blur(8px);
+            padding: 20px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            max-width: 500px;
+            width: 100%;
+            background: white;
+            padding: 20px;
+            border-radius: 30px;
+            box-shadow: 0 25px 50px -12px rgba(255, 133, 162, 0.3);
+            text-align: center;
         }
 
         .playlist-item {
@@ -96,6 +128,16 @@
     </head>
     <body onclick="clickSpawn(event)">
         <audio id="mainAudio" loop></audio>
+        <div id="photo-modal" onclick="closeModal()">
+            <div class="modal-content animate__animated animate__zoomIn" onclick="event.stopPropagation()">
+                <div class="rounded-2xl overflow-hidden mb-4 shadow-lg">
+                    <img id="modal-img" src="" class="w-full object-cover">
+                </div>
+                <h3 id="modal-title" class="text-xl font-bold text-pink-500 mb-2"></h3>
+                <p id="modal-text" class="text-gray-700 italic leading-relaxed"></p>
+                <button onclick="closeModal()" class="mt-6 bg-pink-400 text-white px-6 py-2 rounded-full font-bold">Tutup 🌸</button>
+            </div>
+        </div>
         <div id="welcome-screen" class="fixed inset-0 z-[10000] flex items-center justify-center bg-white text-center px-6">
             <div class="animate__animated animate__fadeIn w-full">
                 <div class="text-7xl mb-4 animate-bounce">🧸</div>
@@ -113,7 +155,7 @@
             <div class="cute-nav">
                 <a href="#home" class="font-bold text-pink-500">Home</a>
                 <a href="#reason" class="font-bold text-pink-500">Story</a>
-                <a href="#memory" class="font-bold text-pink-500">About You, Zara.</a>
+                <a href="#memory" class="font-bold text-pink-500">About Zara.</a>
                 <a href="#secret" class="font-bold text-pink-700">🔐</a>
             </div>
         </nav>
@@ -125,102 +167,64 @@
         </section>
         <section id="reason">
             <h2 class="text-4xl text-pink-500 mb-10" style="font-family: 'Pacifico', cursive;">Reasons Why I Love You</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-4xl">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-4xl">
                 <script>
                 const stages = ["hi, peltama-tama,,,", "Tapi,,,", "aku suka semua tentang kamu tau!!!", "maybe u my savior? eak", "AMU KEYEN BANEDD!!", "Zara.", "bocil imupkuu", "JARA C BOCIL YANG CANTIKNA NDA MANUSIAWI", "iloveyou infinity <3"];
                 const icons = ['🧸','🎀','🌸','🍭','💖','✨','🥂','🏠','💍'];
+                const messages = [
+                    "alasan aku buat sayang sama kamu sebenernya terlalu banyak, gaakan cukup buat aku ungkapin pake kata-kata. bahkan, tanpa ada alasanpun, aku bakal tetep cinta banget sama kamu ayang",
+                    "dari awal aku deket sama kamu dan mulai suka sama kamu, aku bisa ngerasain kalo amu waktu itu beneran sayang sama aku. gatau kenapa ayang, tapi kayak rasa sayang kamu ke aku itu bisa nyampe ke aku. makasih yaa?? makasih banyak udah bikin aku ngerasa disayang. sekarang malah aku yang jauhhh lebih sayangg sama kamuu",
+                    "aku suka semua hal yang ada di diri kamu, aku terima amu, aku sayang kamu dengan semua instrumen yang ada di diri kamu. baiknya amu, jelekna amu, cmwa tentang amu, aku suka dan sayang banget sama kamu. jadi kamu ctop ngerasa kurang yaa?? aku justru bersyukur banget punya kamu di hidup aku.",
+                    "tapi serius deh, aku mau bilang makasih banyak karena amu udah lahir di dunia ini. kamu catu-catunya alasan aku bisa beltahan cejauh ini...makasih yaa?? maaf kalo adanya aku di hidup kamu malah jadi beban buat kamu :(",
+                    "amu harus tau kalo aku selalu bangga banget sama kamu, semua yang udah kamu laluin, semua yang udah kamu capai, dan semua hal yang lagi kamu usahain. aku bangga banget sama kamuuu, makasih yaaa udah nemenin aku ngelewatin tahun ini sama kamu. kita lewatin bareng-bareng lagi buat kedepannya, mau ya?",
+                    "aku sayang kamu karena kamu zara, cukup dari diri kamu sendiri. aku bakal selalu terima dan sayang banget sama kamu. jadi jangan segan sama aku otay? jangan mikil yang jeyek teyuss dacaall bocill bwuu ntut",
+                    "makasih ya karena kamu udah jadi orang yang positif dan baik, mau itu sama aku ataupun sama lingkungan kamu. tetep jadi orang baik ya cantik? semoga kamu selalu di kelilingin hal-hal baik kedepannya, termasuk aku calah catuna hehe :(",
+                    "JKAMU TU CANTIK BANED TWU NDA C, WAS ZZ..KALO AGY AKU PUJI JANGAN BILANG AMU B AJ B AJ, enak aj. PACAL AK NIY CANTIKNAA KEBANGETANN, KALO BICA AKU MWU PAMELIN AMU KE CELURUH DUNIAAAA",
+                    "intinya, ini sedikit jawaban aku untuk pertanyaan amu ith (km sayang ak nd knp). xixixi. selamat tahun baru ya cantikku, semoga tahun depan banyak hal baik yang dateng ke kita. nda sabarr mwu sama amu teyussss, tungguin aku yaa?? aku juga mau bilang makasih banyak karena aku ngerasa tahun ini aku banyak cneng naa karena ada amuuu :("
+                ];
 
-                // MASUKKAN PESAN BERBEDA UNTUK TIAP KOTAK DI SINI
-    const messages = [
-        "alasan aku buat sayang sama kamu sebenernya terlalu banyak, gaakan cukup buat aku ungkapin pake kata-kata. bahkan, tanpa ada alasanpun, aku bakal tetep cinta banget sama kamu ayang",
-        "dari awal aku deket sama kamu dan mulai suka sama kamu, aku bisa ngerasain kalo amu waktu itu beneran sayang sama aku. gatau kenapa ayang, tapi kayak rasa sayang kamu ke aku itu bisa nyampe ke aku. makasih yaa?? makasih banyak udah bikin aku ngerasa disayang. sekarang malah aku yang jauhhh lebih sayangg sama kamuu",
-        "aku suka semua hal yang ada di diri kamu, aku terima amu, aku sayang kamu dengan semua instrumen yang ada di diri kamu. baiknya amu, jelekna amu, cmwa tentang amu, aku suka dan sayang banget sama kamu. jadi kamu ctop ngerasa kurang yaa?? aku justru bersyukur banget punya kamu di hidup aku.",
-        "tapi serius deh, aku mau bilang makasih banyak karena amu udah lahir di dunia ini. kamu catu-catunya alasan aku bisa beltahan cejauh ini...makasih yaa?? maaf kalo adanya aku di hidup kamu malah jadi beban buat kamu :(",
-        "amu harus tau kalo aku selalu bangga banget sama kamu, semua yang udah kamu laluin, semua yang udah kamu capai, dan semua hal yang lagi kamu usahain. aku bangga banget sama kamuuu, makasih yaaa udah nemenin aku ngelewatin tahun ini sama kamu. kita lewatin bareng-bareng lagi buat kedepannya, mau ya?",
-        "aku sayang kamu karena kamu zara, cukup dari diri kamu sendiri. aku bakal selalu terima dan sayang banget sama kamu. jadi jangan segan sama aku otay? jangan mikil yang jeyek teyuss dacaall bocill bwuu ntut",
-        "makasih ya karena kamu udah jadi orang yang positif dan baik, mau itu sama aku ataupun sama lingkungan kamu. tetep jadi orang baik ya cantik? semoga kamu selalu di kelilingin hal-hal baik kedepannya, termasuk aku calah catuna hehe :(",
-        "JKAMU TU CANTIK BANED TWU NDA C, WAS ZZ..KALO AGY AKU PUJI JANGAN BILANG AMU B AJ B AJ, enak aj. PACAL AK NIY CANTIKNAA KEBANGETANN, KALO BICA AKU MWU PAMELIN AMU KE CELURUH DUNIAAAA",
-        "intinya, ini sedikit jawaban aku untuk pertanyaan amu ith (km sayang ak nd knp). xixixi. selamat tahun baru ya cantikku, semoga tahun depan banyak hal baik yang dateng ke kita. nda sabarr mwu sama amu teyussss, tungguin aku yaa?? aku juga mau bilang makasih banyak karena aku ngerasa tahun ini aku banyak cneng naa karena ada amuuu :("
-    ];
-
-    stages.forEach((title, i) => {
-        document.write(`
-            <div class="bg-white/95 rounded-2xl p-5 text-center border-2 border-white shadow-sm animate__animated animate__fadeInUp">
-                <div class="text-4xl mb-2">${icons[i]}</div>
-                <h3 class="font-bold text-pink-500 text-lg">${title}</h3>
-                <p class="text-[11px] text-gray-400 italic mt-2 leading-relaxed">
-                    "${messages[i]}"
-                </p>
-            </div>
-        `);
-    });
+                stages.forEach((title, i) => {
+                    document.write(`
+                        <div class="hover-card bg-white/95 rounded-3xl p-6 text-center border-2 border-white shadow-lg">
+                            <div class="text-5xl mb-3">${icons[i]}</div>
+                            <h3 class="font-bold text-pink-500 text-xl mb-3">${title}</h3>
+                            <p class="text-[13px] text-gray-700 font-medium italic leading-relaxed">
+                                "${messages[i]}"
+                            </p>
+                        </div>
+                    `);
+                });
                 </script>
             </div>
         </section>
         <section id="memory">
             <h2 class="text-4xl text-pink-500 mb-10" style="font-family: 'Pacifico', cursive;">About my baby, zara</h2>
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 w-full max-w-4xl">
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-5 w-full max-w-4xl">
                 <script>
-    // 1. Daftar data untuk galeri (Nama file di folder img & teks unik)
-   const galleryData = [
-    { 
-        img: "img/1.jpg", 
-        title: "ultah ijey, 29 july 2025.", // Judul khusus kotak 1
-        text: "maaf kalo alay, tapi pas aku ultah aku benelan ngerasa seseneng itu sama amu. aku ngerasa diinget dan di pelhatiin sama amu. makasih ya sayang?" 
-    },
-    { 
-        img: "img/9.jpg", 
-        title: "Ultah amu,,,AKU BAKAL SELALU INGET INII", // Judul khusus kotak 2
-        text: "maaf ya ayang, walaupun aku ad tantrum na pas ini. tapi aku inget baned aku nyiapin cmwa na bwat amu, aku mwu kamu ngerasa seneng. aku mwu kamu happy sama aku apalagi di hari spesial kamu, tpi aku mcih ada ad jelekna yaa? maaf yaa? :( TAPI WAKTU IT AK BENELAN EXCITED BANED SAMA ULTAH AMU HIKSS. nd sbal nunggu ultah amu agy,,, CYAPA MWU IPAADDDD :p" 
-    },
-    { 
-        img: "img/2.jpg", 
-        title: "Kamu agy ngambek", // Judul khusus kotak 3
-        text: "hehehe, kamu kalo lagi ngambek ceyem baned cayangg. campai-campai aku clalu takut amu benelan bakal ninggalin aku :( aku clalu takut cama apa yang bakal amu bilang ke aku, hiks. tapi kadang amu ada gemec2 na gitu kadang ak pengen kokop amu aj pas amu agy mayah2. aku cayang amu baned sayangkuu, maafin aku suka bikin kamu marah yaa??" 
-    },
-    { 
-        img: "img/8.jpg", 
-        title: "I love you. Three Words, Infinite Meaning", // Judul khusus kotak 4
-        text: "hal yang selalu aku inget, dari dulu sampe sekarang. kepala aku clalu berisik, rasana kayak gapelnah tenang. tapi pas sama amu, kamu beneran bisa bikin aku tenang banget. kamu bener2 bikin aku ngerasa pulang. rasanya semuanya bakal baik2 aja selama ada kamu :(" 
-    },
-    { 
-        img: "img/10.jpg", 
-        title: "My Everything.", // Judul khusus kotak 5
-        text: "makasih ya ayang, makasih udah mau ngelewatin semuanya sama aku. makasih kamu udah tetep disini sama aku. buat kedepannya tetep bareng2 ya sayang? mwu amu cemarah apapun pwic jangan tinggalin aku hiks" 
-    },
-    { 
-        img: "img/5.jpg", 
-        title: "cerita kita banyak naik turunnya ya? but, Happy New Year baby ", // Judul khusus kotak 6
-        text: "maaf ya kalo ngejalanin sama aku ga selalu mulus, maaf masih ada berantem nya. maaf masih bikin kamu nangis dan kesel gara2 aku. maaf aku masih ga becus jadi cowok kamu. maaf aku masih banyak kurangnya juga. maafin aku ya? aku janji bakal lebih banyak belajar lagi, aku bakal berusaha buat bisa lebih baik lagi kedepannya ayang." 
-    },
-    { 
-        img: "img/7.jpg", 
-        title: "My Prettiest Lady, Zara", // Judul khusus kotak 6
-        text: "Makasih banyak buat semua hal yang udah kamu usahain buat aku. makasih buat semua sabar dan maaf kamu. aku sayang banget sama kamu, aku gatau harus gimana lagi biar kamu percaya sama perasaan aku. tapi aku sendiri gaperna punya rasa sayang segede ini sama orang, even itu sama diri aku sendiri. tetep sama aku terus kedepannya ya? lewatin semuanya bareng aku lagi. i love you endlessly forever and always zaraaa" 
-    },
-    { 
-        img: "img/11.jpg", 
-        title: "Our Forever Continues", // Judul khusus kotak 6
-        text: "Every day with you is a new memory to cherish. I can't wait to create countless more beautiful moments together. You are my forever. hehehe, maaf alay. but, kamu harus tau kalo perasaan aku ke kamu selalu konsisten naik, aku gaakan nakal ataupun berubah. jadi amu jangan khawatir ya? CMANGAT BUAT KITA DI TAHUN DEPANN HIKSROOTTT." 
-    }
-];
+                const galleryData = [
+                    { img: "img/1.jpg", title: "ultah ijey, 29 july 2025.", text: "maaf kalo alay, tapi pas aku ultah aku benelan ngerasa seseneng itu sama amu. aku ngerasa diinget dan di pelhatiin sama amu. makasih ya sayang?" },
+                    { img: "img/9.jpg", title: "Ultah amu", text: "maaf ya ayang, walaupun aku ad tantrum na pas ini. tapi aku inget baned aku nyiapin cmwa na bwat amu, aku mwu kamu ngerasa seneng. aku mwu kamu happy sama aku apalagi di hari spesial kamu!" },
+                    { img: "img/2.jpg", title: "Kamu agy ngambek", text: "hehehe, kamu kalo lagi ngambek ceyem baned cayangg. campai-campai aku clalu takut amu benelan bakal ninggalin aku :(" },
+                    { img: "img/8.jpg", title: "I love you.", text: "hal yang selalu aku inget, dari dulu sampe sekarang. kamu bener2 bikin aku ngerasa pulang. rasanya semuanya bakal baik2 aja selama ada kamu :(" },
+                    { img: "img/10.jpg", title: "My Everything.", text: "makasih ya ayang, makasih udah mau ngelewatin semuanya sama aku. makasih kamu udah tetep disini sama aku." },
+                    { img: "img/5.jpg", title: "Happy New Year", text: "maaf ya kalo ngejalanin sama aku ga selalu mulus, maaf masih ada berantem nya. aku janji bakal lebih banyak belajar lagi buat amu." },
+                    { img: "img/7.jpg", title: "My Prettiest Lady", text: "aku gatau harus gimana lagi biar kamu percaya sama perasaan aku. tapi aku sendiri gaperna punya rasa sayang segede ini sama orang." },
+                    { img: "img/11.jpg", title: "Our Forever", text: "Every day with you is a new memory to cherish. CMANGAT BUAT KITA DI TAHUN DEPANN HIKSROOTTT." }
+                ];
 
-    // 2. Tampilkan data ke dalam kartu
-  galleryData.forEach((item, i) => {
-    document.write(`
-        <div class="bg-white rounded-2xl p-2 border border-white shadow-md">
-            <div class="aspect-square rounded-xl overflow-hidden mb-2">
-                <img src="${item.img}" class="w-full h-full object-cover" alt="${item.title}">
-            </div>
-            <p class="text-[11px] text-pink-500 font-bold text-center mb-1">
-                ${item.title}
-            </p>
-            <p class="text-[9px] text-gray-400 italic text-center px-1 leading-tight">
-                "${item.text}"
-            </p>
-        </div>
-    `);
-});
+                galleryData.forEach((item, i) => {
+                    document.write(`
+                        <div class="hover-card bg-white rounded-3xl p-3 border-2 border-white shadow-md" onclick="zoomPhoto('${item.img}', '${item.title.replace(/'/g, "\\'")}', '${item.text.replace(/'/g, "\\'")}')">
+                            <div class="aspect-square rounded-2xl overflow-hidden mb-3 shadow-inner">
+                                <img src="${item.img}" class="w-full h-full object-cover">
+                            </div>
+                            <p class="text-[12px] text-pink-600 font-bold text-center mb-1 truncate px-1">${item.title}</p>
+                            <p class="text-[10px] text-gray-700 font-semibold italic text-center px-1 leading-tight line-clamp-2">
+                                "${item.text}"
+                            </p>
+                        </div>
+                    `);
+                });
                 </script>
             </div>
         </section>
@@ -253,8 +257,8 @@
                 </div>
                 <div class="closing-box text-center animate__animated animate__fadeInUp">
                     <h3 class="text-2xl text-pink-500 mb-3" style="font-family: 'Pacifico', cursive;">cdikit yapping dari ijey</h3>
-                    <p class="text-pink-800 italic text-sm leading-relaxed font-semibold">
-                        "selamat tahun baru sayangkuu. aku bangga banget sama kamu sampe sekarang, makasih banyak buat semua hal yang udah kamu lakuin baik itu buat aku, diri kamu sendiri, atau bahkan buat orang lain. makasih yaa walaupun hidup aku ga begitu mulus, tapi aku ketemu manusia seindah kamuu,,, hehehe tpi aku serius. aku bersyukur banget punya kamu. tetep sayang sama aku terus yaa?? jangan beyubah yaa ayang :(. iloveyou sososo incredibly much sayangnyaa ijeeyy. HAPPY NEW YEAR YEYEYEYEY!!! ANOTHER YEAR WITH JARAAJAR :p 💖✨"
+                    <p class="text-pink-800 italic text-sm leading-relaxed font-bold">
+                        "selamat tahun baru sayangkuu. aku bangga banget sama kamu sampe sekarang... iloveyou sososo incredibly much sayangnyaa ijeeyy. HAPPY NEW YEAR YEYEYEYEY!!! ANOTHER YEAR WITH JARAAJAR :p 💖✨"
                     </p>
                     <div class="mt-4 text-4xl">💍💐</div>
                 </div>
@@ -262,39 +266,25 @@
         </section>
         <script>
         const songData = [
-    { 
-        title: "Home", 
-        src: "music/home.mp3", 
-        cover: "img/7.jpg", // Ganti dengan path folder img kamu
-        quote: "makasih udah selalu jadi rumah aku buat pulang" 
-    },
-    { 
-        title: "cihuy", 
-        src: "music/coldplay.mp3", 
-        cover: "img/3.jpg", // Pastikan nama file sesuai (misal: cover2.jpg)
-        quote: "aku sayang kamu banget, makasih udah jadi tempat yang bikin aku tenang ayang" 
-    },
-    { 
-        title: "mwehehehe", 
-        src: "music/keshi.mp3", 
-        cover: "img/4.jpg", // Contoh jika menggunakan format .png
-        quote: "makasih banyak buat semua sabar dan maaf kamu selama ini,,,maaf aku masih harus banyak belajar :( ✨" 
-    },
-    { 
-        title: "cdah keyen byum", 
-        src: "music/basket.mp3", 
-        cover: "img/12.jpg", // Contoh jika menggunakan format .png
-        quote: "CMOGA KAMU HAPPYYYY YAAA✨" 
-    },
-    { 
-        title: "fallingforyou", 
-        src: "music/fallingforyou.mp3", 
-        cover: "img/1.jpg", // Contoh jika menggunakan format .png
-        quote: "kalo aku lagi kangen banget sama kamu, aku suka dengerin ini. makasih ya ayang buat semuanyaaa. aku selalu sayang banget sama kamu✨" 
-    }
-];
+            { title: "Home", src: "music/home.mp3", cover: "img/7.jpg", quote: "makasih udah selalu jadi rumah aku buat pulang" },
+            { title: "cihuy", src: "music/coldplay.mp3", cover: "img/3.jpg", quote: "aku sayang kamu banget, makasih udah jadi tempat yang bikin aku tenang ayang" },
+            { title: "mwehehehe", src: "music/keshi.mp3", cover: "img/4.jpg", quote: "makasih banyak buat semua sabar dan maaf kamu selama ini..." },
+            { title: "cdah keyen byum", src: "music/basket.mp3", cover: "img/12.jpg", quote: "CMOGA KAMU HAPPYYYY YAAA✨" },
+            { title: "fallingforyou", src: "music/fallingforyou.mp3", cover: "img/1.jpg", quote: "kalo aku lagi kangen banget sama kamu, aku suka dengerin ini." }
+        ];
 
         const audio = document.getElementById('mainAudio');
+
+        function zoomPhoto(img, title, text) {
+            document.getElementById('modal-img').src = img;
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-text').innerText = text;
+            document.getElementById('photo-modal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('photo-modal').style.display = 'none';
+        }
 
         function unlockEverything() {
             const n = document.getElementById('inputNama').value;

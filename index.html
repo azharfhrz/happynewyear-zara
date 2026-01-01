@@ -124,6 +124,17 @@
             border-radius: 50px; padding: 8px 20px;
             display: flex; gap: 15px; font-size: 14px;
         }
+
+        .custom-scroll::-webkit-scrollbar {
+        width: 4px;
+        }
+        .custom-scroll::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.1);
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+        background: #ff85a2;
+        border-radius: 10px;
+        }
         </style>
     </head>
     <body onclick="clickSpawn(event)">
@@ -229,7 +240,7 @@
             </div>
         </section>
         <section id="secret">
-            <div id="password-gate" class="text-center bg-white/90 backdrop-blur-md p-10 rounded-[50px] shadow-2xl w-full max-w-xs border-4 border-pink-100 animate__animated animate__fadeIn relative">
+            <div id="password-gate" class="text-center bg-white/90 backdrop-blur-md p-8 rounded-[40px] shadow-2xl w-full max-w-sm border-4 border-pink-100 animate__animated animate__fadeIn relative mx-auto">
                 <div class="absolute -top-6 left-1/2 -translate-x-1/2 text-5xl">🎀</div>
                 <h2 class="text-2xl text-pink-500 mb-6" style="font-family: 'Pacifico', cursive;">Unlock My Heart 🔐</h2>
                 <div class="relative mb-6">
@@ -245,38 +256,38 @@
                 </div>
                 <button onclick="checkMultiPass()" class="w-full bg-gradient-to-r from-pink-400 to-rose-400 text-white font-black py-4 rounded-3xl shadow-lg active:scale-90 transition-all mb-8 tracking-widest">BUKA RAHASIA ✨</button>
                 <div class="mt-4 p-5 bg-pink-50 rounded-[35px] border-2 border-dashed border-pink-200">
-                    <p class="text-[10px] text-pink-400 font-black mb-3 uppercase tracking-tighter">Butuh Bantuan Sayang?</p>
+                    <p class="text-[10px] text-pink-400 font-black mb-3 uppercase tracking-tighter">Butuh Bantuan Cantikku?</p>
                     <div id="hint-gift" onclick="openHintAnim()" class="cursor-pointer text-5xl hover:scale-110 transition-transform animate-bounce inline-block">🎁</div>
                     <div id="hint-text" class="hidden animate__animated animate__zoomIn">
                         <div class="bg-white rounded-2xl p-3 mt-2 shadow-sm border border-pink-100">
                             <p class="text-[11px] text-pink-600 font-bold italic leading-tight">
-                                "Coba ketik salah satu dari 3 kata ini:
+                                "Aku kasih hint yaa:
                                 <br>
-                                <span class="text-rose-400">sayang</span>
-                                /
-                                <span class="text-rose-400">love</span>
-                                /
-                                <span class="text-rose-400">zara</span>
+                                <span class="text-rose-400"> 🎀 pass 1 : "aku cinta kamu" versi yang suka aku tulis di notes</span>
+                                <br>
+                                <span class="text-rose-400"> 🎀 pass 2 : anniv kita</span>
+                                <br>
+                                <span class="text-rose-400"> 🎀 pass 3 : SINGKATAN KITA yang suka ak pake, di web ini jgk ada kok xixix :p</span>
                                 "
                             </p>
                         </div>
                     </div>
                 </div>
             </div>
-            <div id="secret-content" class="hidden w-full max-w-4xl px-4 animate__animated animate__fadeInUp">
-                <div class="spotify-card p-6 flex flex-col gap-6" id="playerWrapper" style="background: rgba(255, 255, 255, 0.4); border: 1px solid rgba(255,255,255,0.6);">
-                    <div class="flex flex-col items-center text-center p-8 rounded-[50px] shadow-xl border border-white/60 relative overflow-hidden" style="background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(10px);">
-                        <div class="relative mb-8">
-                            <div class="absolute inset-0 bg-pink-300/30 blur-3xl rounded-full"></div>
-                            <div class="w-52 h-52 rounded-full border-[10px] border-white shadow-2xl overflow-hidden disc-animation relative z-10 mx-auto">
+            <div id="secret-content" class="hidden w-full max-w-md px-2 animate__animated animate__fadeInUp">
+                <div class="spotify-card p-5 flex flex-col gap-4" id="playerWrapper" style="background: rgba(255, 255, 255, 0.4); border: 1px solid rgba(255,255,255,0.6); border-radius: 45px;">
+                    <div class="flex flex-col items-center text-center p-6 rounded-[40px] shadow-xl border border-white/60 relative overflow-hidden" style="background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px);">
+                        <div class="relative mb-5">
+                            <div class="absolute inset-0 bg-pink-300/20 blur-3xl rounded-full"></div>
+                            <div class="w-56 h-56 rounded-full border-[8px] border-white shadow-2xl overflow-hidden disc-animation relative z-10 mx-auto">
                                 <img id="trackCover" src="img/7.jpg" class="w-full h-full object-cover">
                             </div>
                         </div>
-                        <h3 id="trackTitle" class="text-3xl font-bold text-gray-800 mb-2 tracking-tight">Pilih Lagu</h3>
-                        <div class="w-full p-5 bg-pink-50/80 backdrop-blur-sm rounded-3xl border border-white mb-6">
-                            <p id="trackQuote" class="text-pink-600 italic text-sm font-bold leading-relaxed">"Klik lagu di bawah ya sayang..."</p>
+                        <h3 id="trackTitle" class="text-2xl font-bold text-gray-800 mb-1 tracking-tight px-2">Pilih Lagu</h3>
+                        <div class="w-full p-3 bg-white/60 rounded-2xl border border-white/50 mb-5 shadow-sm">
+                            <p id="trackQuote" class="text-pink-600 italic text-xs font-bold leading-snug">"Klik lagu di bawah ya sayang..."</p>
                         </div>
-                        <div class="w-full px-2 mb-8">
+                        <div class="w-full px-1 mb-6">
                             <input
                                 type="range"
                                 id="progress-bar"
@@ -285,28 +296,28 @@
                                 step="0.1"
                                 class="w-full h-1.5 bg-pink-200/50 rounded-lg appearance-none cursor-pointer accent-pink-500"
                             >
-                            <div class="flex justify-between text-[11px] text-gray-500 font-bold mt-2 font-mono">
+                            <div class="flex justify-between text-[10px] text-gray-500 font-bold mt-2 font-mono">
                                 <span id="current-time">00:00</span>
                                 <span id="total-duration">00:00</span>
                             </div>
                         </div>
-                        <div class="flex items-center gap-10 mb-8">
-                            <button onclick="prevTrack()" class="active:scale-75 transition-all">
-                                <svg class="w-8 h-8 fill-pink-400" viewBox="0 0 24 24">
+                        <div class="flex items-center justify-center gap-8 mb-6 w-full">
+                            <button onclick="prevTrack()" class="active:scale-75 transition-all outline-none">
+                                <svg class="w-7 h-7 fill-pink-400" viewBox="0 0 24 24">
                                     <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/>
                                 </svg>
                             </button>
-                            <button onclick="togglePlayPause()" class="w-20 h-20 bg-gradient-to-br from-pink-400 to-rose-500 rounded-full flex items-center justify-center text-white shadow-xl active:scale-90 transition-all">
+                            <button onclick="togglePlayPause()" class="w-16 h-16 bg-gradient-to-br from-pink-400 to-rose-500 rounded-full flex items-center justify-center text-white shadow-lg active:scale-90 transition-all outline-none">
                                 <span id="play-icon-svg"></span>
                             </button>
-                            <button onclick="nextTrack()" class="active:scale-75 transition-all">
-                                <svg class="w-8 h-8 fill-pink-400" viewBox="0 0 24 24">
+                            <button onclick="nextTrack()" class="active:scale-75 transition-all outline-none">
+                                <svg class="w-7 h-7 fill-pink-400" viewBox="0 0 24 24">
                                     <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/>
                                 </svg>
                             </button>
                         </div>
-                        <div class="flex items-center gap-4 w-full max-w-[180px]">
-                            <svg class="w-4 h-4 fill-pink-500" viewBox="0 0 24 24">
+                        <div class="flex items-center gap-3 w-full max-w-[150px] opacity-70">
+                            <svg class="w-3.5 h-3.5 fill-pink-500" viewBox="0 0 24 24">
                                 <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
                             </svg>
                             <input
@@ -320,239 +331,218 @@
                             >
                         </div>
                     </div>
-                    <div class="bg-pink-100/60 backdrop-blur-md p-6 rounded-[45px] border-2 border-white shadow-xl text-center">
-                        <div class="mb-5">
-                            <h3 class="font-black text-2xl text-pink-700 tracking-tight">Our Playlist 🎧</h3>
-                            <p class="text-sm text-rose-500 font-bold italic mt-1">kalo kamu kangen aku, dengerin ini yaa. cmoga kamu sukaa, nanti kalo ada requestan lagu aku taro cini atau tele nyanyiannyaa otaayy?? MWAAHHH. ini semua aku buat khusus cuma buat kamu xixixi :p</p>
+                    <div class="bg-pink-100/60 backdrop-blur-md p-5 rounded-[40px] border-2 border-white shadow-xl">
+                        <div class="mb-4 text-center">
+                            <h3 class="font-black text-xl text-pink-700 tracking-tight">Our Playlist 🎧</h3>
+                            <p class="text-[10px] text-rose-500 font-bold italic opacity-80 leading-tight">kalo kamu kangen aku, dengerin ini yaa ✨</p>
                         </div>
-                        <div id="playlistContainer" class="max-h-[300px] overflow-y-auto pr-2 space-y-3"></div>
+                        <div id="playlistContainer" class="max-h-[300px] overflow-y-auto px-1 space-y-2 custom-scroll"></div>
                     </div>
                 </div>
-                <div class="closing-box text-center animate__animated animate__fadeInUp mt-10 mb-20">
-                    <h3 class="text-2xl text-pink-600 mb-3" style="font-family: 'Pacifico', cursive;">cdikit yapping dari ijey</h3>
-                    <p class="text-pink-800 italic text-sm leading-relaxed font-bold">"selamat tahun baru sayangkuu. aku bangga banget sama kamu sampe sekarang, makasih banyak buat semua hal yang udah kamu lakuin baik itu buat aku, diri kamu sendiri, atau bahkan buat orang lain. makasih yaa walaupun hidup aku ga begitu mulus, tapi aku ketemu manusia seindah kamuu,,, hehehe tpi aku serius. aku bersyukur banget punya kamu. tetep sayang sama aku terus yaa?? jangan beyubah yaa ayang :(. iloveyou sososo incredibly much sayangnyaa ijeeyy. HAPPY NEW YEAR YEYEYEYEY!!! ANOTHER YEAR WITH JARAAJAR :p 💖✨ "</p>
-                    <div class="mt-4 text-4xl">💍💐</div>
+                <div class="closing-box text-center animate__animated animate__fadeInUp mt-8 mb-20 p-6 bg-white/80 rounded-[35px] border-2 border-pink-100 shadow-lg mx-auto w-full">
+                    <h3 class="text-xl text-pink-600 mb-2" style="font-family: 'Pacifico', cursive;">cdikit yapping dari ijey</h3>
+                    <p class="text-pink-800 italic text-[13px] leading-relaxed font-bold">"selamat tahun baru sayangkuu. aku bangga banget sama kamu sampe sekarang, makasih banyak buat semua hal yang udah kamu lakuin baik itu buat aku, diri kamu sendiri, atau bahkan buat orang lain. makasih yaa walaupun hidup aku ga begitu mulus, tapi aku ketemu manusia seindah kamuu,,, hehehe tpi aku serius. aku bersyukur banget punya kamu. tetep sayang sama aku terus yaa?? jangan beyubah yaa ayang :(. iloveyou sososo incredibly much sayangnyaa ijeeyy. HAPPY NEW YEAR YEYEYEYEY!!! ANOTHER YEAR WITH JARAAJAR :p 💖✨"</p>
+                    <div class="mt-4 text-3xl">💍💐</div>
                 </div>
             </div>
         </section>
-        <button id="music-toggle" onclick="toggleMusic()" style="position: fixed; bottom: 25px; right: 20px; z-index: 10002; background: rgba(255, 255, 255, 0.9); border: 2.5px solid var(--soft-pink); width: 48px; height: 48px; border-radius: 50%; display: none; align-items: center; justify-content: center; shadow: 0 4px 15px rgba(255, 133, 162, 0.4);">
-            <span id="speaker-icon" style="font-size: 22px;">🔊</span>
+        <button id="music-toggle" onclick="toggleMusic()" style="position: fixed; bottom: 20px; right: 20px; z-index: 10002; background: rgba(255, 255, 255, 0.9); border: 2.5px solid #ffc2d1; width: 45px; height: 45px; border-radius: 50%; display: none; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(255, 133, 162, 0.4);">
+            <span id="speaker-icon" style="font-size: 20px;">🔊</span>
         </button>
         <script>
-const svgPlay = '<svg class="w-10 h-10 fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
-const svgPause = '<svg class="w-10 h-10 fill-current" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
+        const svgPlay = '<svg class="w-8 h-8 fill-current ml-1" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+        const svgPause = '<svg class="w-8 h-8 fill-current" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
 
-const songData = [
-    { title: "Home", src: "music/home.mp3", 
-    cover: "img/7.jpg", quote: "makasih udah selalu jadi rumah aku buat pulang ❤️" },
-    { title: "fallingforyou", src: "music/fallingforyou.mp3", cover: "img/1.jpg", quote: "kalo aku lagi kangen banget sama kamu, aku suka dengerin ini." },
-    { title: "dreaming of you - cas", src: "music/dreaming.mp3", cover: "img/16.jpg", quote: "aku juga nyimpen kamu di lagu ini hehehe." },
-    { title: "cihuy", src: "music/coldplay.mp3", 
-    cover: "img/3.jpg", quote: "aku sayang kamu banget, makasih udah jadi tempat yang bikin aku tenang ayang 🌸" },
-    { title: "mwehehehe", src: "music/keshi.mp3", 
-    cover: "img/4.jpg", quote: "makasih banyak buat semua sabar dan maaf kamu selama ini..." },
-    { title: "cdah keyen byum", src: "music/basket.mp3", 
-    cover: "img/12.jpg", quote: "CMOGA KAMU HAPPYYYY YAAA✨" },
-    { title: "always", src: "music/alywas.mp3", cover: "img/13.jpg", quote: "THIS SONG IS DEDICATED TO YOUUUU!!! 'And I'll be here, 'cause we both know how it goes I don't want things to change, I pray they stay the same always' HIKSROTTT✨" },
-    { title: "car's outside - ur bf, azhar.", src: "music/car.mp3", 
-    cover: "img/14.jpg", quote: "kalo dengel ini suka keinget tentang kita hmzhmzhmz 'Oh, but you know the truth, I'd rather hold you Than this mobile in my hand But I guess it'll do, 'cause for you I would run up my phone bill' HIKSROTT :(" },
-    { title: "GGI - gantenk gantenk ijey :p", src: "music/hujan.mp3", 
-    cover: "img/11.jpg", quote: "CYAPAA TWUU LAGUU INIYYY, ijey jadi vampir" },
-    { title: "iris - Goo Goo Ijey", src: "music/iris.mp3", cover: "img/15.jpg", quote: "aku cuka baned ie cama lagu iniy teyus cama instrumen lagu na juga hiks, amu cuka ndaaa" },
-    { title: "IJEY ROCK N ROLL LESGO", src: "music/rock.mp3", cover: "img/11.jpg", quote: "MWEHEHEHEH MAAF IA JELEK" },
-    { title: "kamu - ijay cjr", src: "music/kamu.mp3", cover: "img/6.jpg", quote: "cbenelna ak member cjr yg di sembunyiin ayank " },
-    { title: "death bed - ijey kasep", src: "music/death.mp3", cover: "img/17.jpg", quote: "ini calah catu lagu yang ak suka dengelin pas jaman kopit ayank" },
-    { title: "ijey galau kalo amu agy mayah :(", src: "music/bernadya.mp3", 
-    cover: "img/19.jpg", quote: "ATUT AMU ND CINTA AGY CAMAA AKUU HNGGG :()" },
-    { title: "wanna be yours - ijey", src: "music/cas.mp3", cover: "img/10.jpg", quote: "tapi aku cdahh milik amu cpenuhnaa hehehehe, JARAAJAR POREPER :p" },
-    { title: "STUCK W/ U - IJEY BIEBER", src: "music/stuck.mp3", cover: "img/18.jpg", quote: "MWEHEHEHE MAAF YH KALO JELEK BUT THIS IS IJEY BIEBER LESGOO" },
+        const songData = [
+            { title: "Home", src: "music/home.mp3", cover: "img/7.jpg", quote: "makasih udah selalu jadi rumah aku buat pulang ❤️" },
+            { title: "fallingforyou", src: "music/fallingforyou.mp3", cover: "img/1.jpg", quote: "kalo aku lagi kangen banget sama kamu, aku suka dengerin ini." },
+            { title: "dreaming of you - cas", src: "music/dreaming.mp3", cover: "img/16.jpg", quote: "aku juga nyimpen kamu di lagu ini hehehe." },
+            { title: "cihuy", src: "music/coldplay.mp3", cover: "img/3.jpg", quote: "aku sayang kamu banget, makasih udah jadi tempat yang bikin aku tenang ayang 🌸" },
+            { title: "mwehehehe", src: "music/keshi.mp3", cover: "img/4.jpg", quote: "makasih banyak buat semua sabar dan maaf kamu selama ini..." },
+            { title: "cdah keyen byum", src: "music/basket.mp3", cover: "img/12.jpg", quote: "CMOGA KAMU HAPPYYYY YAAA✨" },
+            { title: "always", src: "music/alywas.mp3", cover: "img/13.jpg", quote: "THIS SONG IS DEDICATED TO YOUUUU!!!✨" },
+            { title: "car's outside - ur bf, azhar.", src: "music/car.mp3", cover: "img/14.jpg", quote: "kalo dengel ini suka keinget tentang kita hmzhmzhmz HIKSROTT :(" },
+            { title: "GGI - gantenk gantenk ijey :p", src: "music/hujan.mp3", cover: "img/11.jpg", quote: "CYAPAA TWUU LAGUU INIYYY, ijey jadi vampir" },
+            { title: "iris - Goo Goo Ijey", src: "music/iris.mp3", cover: "img/15.jpg", quote: "aku cuka baned ie cama lagu iniy teyus cama instrumen lagu na juga hiks" },
+            { title: "IJEY ROCK N ROLL LESGO", src: "music/rock.mp3", cover: "img/11.jpg", quote: "MWEHEHEHEH MAAF IA JELEK" },
+            { title: "kamu - ijay cjr", src: "music/kamu.mp3", cover: "img/6.jpg", quote: "cbenelna ak member cjr yg di sembunyiin ayank " },
+            { title: "death bed - ijey kasep", src: "music/death.mp3", cover: "img/17.jpg", quote: "ini calah catu lagu yang ak suka dengelin pas jaman kopit ayank" },
+            { title: "ijey galau kalo amu agy mayah :(", src: "music/bernadya.mp3", cover: "img/19.jpg", quote: "ATUT AMU ND CINTA AGY CAMAA AKUU HNGGG :()" },
+            { title: "wanna be yours - ijey", src: "music/cas.mp3", cover: "img/10.jpg", quote: "tapi aku cdahh milik amu cpenuhnaa hehehehe, JARAAJAR POREPER :p" },
+            { title: "STUCK W/ U - IJEY BIEBER", src: "music/stuck.mp3", cover: "img/18.jpg", quote: "MWEHEHEHE MAAF YH KALO JELEK BUT THIS IS IJEY BIEBER LESGOO" }
+        ];
 
+        const validPasswords = ["ilysm", "260824", "jaraajar"];
+        let currentTrackIndex = 0;
+        const audio = document.getElementById('mainAudio');
+        const progressBar = document.getElementById('progress-bar');
+        const currentTimeEl = document.getElementById('current-time');
+        const durationEl = document.getElementById('total-duration');
+        const volumeSlider = document.getElementById('volume-slider');
+        const playPauseBtn = document.getElementById('play-icon-svg');
 
-    
-];
-
-const validPasswords = ["sayang", "love", "zara"];
-let currentTrackIndex = 0;
-const audio = document.getElementById('mainAudio');
-const progressBar = document.getElementById('progress-bar');
-const currentTimeEl = document.getElementById('current-time');
-const durationEl = document.getElementById('total-duration');
-const volumeSlider = document.getElementById('volume-slider');
-const playPauseBtn = document.getElementById('play-icon-svg');
-
-function loadTrack(index) {
-    currentTrackIndex = index;
-    audio.src = songData[index].src;
-    document.getElementById('trackTitle').innerText = songData[index].title;
-    document.getElementById('trackCover').src = songData[index].cover;
-    document.getElementById('trackQuote').innerText = songData[index].quote;
-    
-    document.querySelectorAll('.playlist-item').forEach((el, i) => {
-        el.style.background = (i === index) ? "linear-gradient(90deg, #ff85a2, #fb6f92)" : "rgba(255, 255, 255, 0.6)";
-        el.style.color = (i === index) ? "white" : "#be185d";
-    });
-}
-
-function togglePlayPause() {
-    if (audio.paused) {
-        audio.play();
-        playPauseBtn.innerHTML = svgPause;
-        document.getElementById('playerWrapper').classList.add('playing');
-    } else {
-        audio.pause();
-        playPauseBtn.innerHTML = svgPlay;
-        document.getElementById('playerWrapper').classList.remove('playing');
-    }
-}
-
-function nextTrack() { currentTrackIndex = (currentTrackIndex + 1) % songData.length; loadTrack(currentTrackIndex); audio.play(); playPauseBtn.innerHTML = svgPause; }
-function prevTrack() { currentTrackIndex = (currentTrackIndex - 1 + songData.length) % songData.length; loadTrack(currentTrackIndex); audio.play(); playPauseBtn.innerHTML = svgPause; }
-
-audio.addEventListener('timeupdate', () => {
-    if (!isNaN(audio.duration)) {
-        progressBar.value = (audio.currentTime / audio.duration) * 100;
-        const curM = Math.floor(audio.currentTime / 60); const curS = Math.floor(audio.currentTime % 60);
-        const durM = Math.floor(audio.duration / 60); const durS = Math.floor(audio.duration % 60);
-        currentTimeEl.innerText = `${curM}:${curS < 10 ? '0'+curS : curS}`;
-        durationEl.innerText = `${durM}:${durS < 10 ? '0'+durS : durS}`;
-    }
-});
-
-progressBar.addEventListener('input', () => audio.currentTime = (progressBar.value / 100) * audio.duration);
-volumeSlider.addEventListener('input', () => audio.volume = volumeSlider.value);
-audio.addEventListener('ended', nextTrack);
-
-function unlockEverything() {
-    const n = document.getElementById('inputNama').value;
-    if(!n) return alert("Panggilannya diisi dulu sayang! 🎀");
-    document.getElementById('userNameDisplay').innerText = n;
-    document.getElementById('welcome-screen').classList.add('animate__animated', 'animate__fadeOutUp');
-    
-    // MUNCULKAN SPEAKER & JALANKAN LAGU
-    document.getElementById('music-toggle').style.display = 'flex';
-    loadTrack(0);
-    audio.play().catch(() => console.log("User interaction required"));
-    playPauseBtn.innerHTML = svgPause;
-
-    setTimeout(() => {
-        document.getElementById('welcome-screen').style.display = 'none';
-        document.getElementById('main-nav').classList.remove('hidden');
-        animateTitle(); initPlaylist();
-        setInterval(createFallingItem, 400);
-        confetti();
-    }, 800);
-}
-
-function toggleMusic() {
-    audio.muted = !audio.muted;
-    document.getElementById('speaker-icon').innerText = audio.muted ? "🔇" : "🔊";
-}
-
-function checkMultiPass() {
-    if (validPasswords.includes(document.getElementById('secretPass').value.toLowerCase().trim())) {
-        document.getElementById('password-gate').classList.add('hidden');
-        document.getElementById('secret-content').classList.remove('hidden');
-        confetti();
-    } else { alert("Password salah sayang, cek kado hint nya! 😋"); }
-}
-
-function togglePassVisibility() {
-    const p = document.getElementById('secretPass');
-    p.type = p.type === "password" ? "text" : "password";
-    document.getElementById('eye-icon').innerText = p.type === "password" ? "👁️‍🗨️" : "🔒";
-}
-
-function openHintAnim() {
-    document.getElementById('hint-gift').innerText = "💖";
-    document.getElementById('hint-text').classList.remove('hidden');
-}
-
-function zoomPhoto(img, title, text) {
-    document.getElementById('modal-img').src = img;
-    document.getElementById('modal-title').innerText = title;
-    document.getElementById('modal-text').innerText = text;
-    document.getElementById('photo-modal').style.display = 'flex';
-}
-
-function closeModal() { document.getElementById('photo-modal').style.display = 'none'; }
-
-function animateTitle() {
-    const title = "Happy New Year";
-    const container = document.getElementById('animatedTitle');
-    title.split("").forEach((char, i) => {
-        const span = document.createElement('span');
-        span.innerText = char === " " ? "\u00A0" : char;
-        span.className = "letter text-4xl";
-        span.style.animationDelay = `${i * 0.1}s`;
-        container.appendChild(span);
-    });
-}
-
-function createFallingItem() {
-    const items = ['🧸', '🎀', '💖', '🌸'];
-    const item = document.createElement('div');
-    item.className = 'falling-item';
-    item.innerHTML = items[Math.floor(Math.random() * items.length)];
-    item.style.left = Math.random() * 90 + 'vw';
-    item.style.fontSize = '22px';
-    item.style.animationDuration = (Math.random() * 3 + 4) + 's';
-    document.body.appendChild(item);
-    setTimeout(() => item.remove(), 7000);
-}
-
-function clickSpawn(e) {
-    const icon = document.createElement('div');
-    icon.style.position = 'fixed'; icon.style.zIndex = '9999'; icon.innerText = '💖';
-    icon.style.left = e.clientX + 'px'; icon.style.top = e.clientY + 'px';
-    icon.style.pointerEvents = 'none';
-    icon.classList.add('animate__animated', 'animate__zoomOutUp');
-    document.body.appendChild(icon);
-    setTimeout(() => icon.remove(), 1000);
-}
-
-function initPlaylist() {
-    const container = document.getElementById('playlistContainer');
-    container.innerHTML = "";
-    songData.forEach((s, i) => {
-        const div = document.createElement('div');
-        // Menambahkan transisi dan shadow agar lebih interaktif
-        div.className = `playlist-item p-3.5 rounded-[22px] flex items-center gap-4 cursor-pointer border border-white/40 shadow-sm transition-all duration-300 hover:scale-105 relative overflow-hidden`;
-        
-        div.innerHTML = `
-            <div class="absolute -right-1 -top-1 opacity-20 text-xl animate-bounce" style="animation-duration: 3s;">🧸</div>
+        function loadTrack(index) {
+            currentTrackIndex = index;
+            audio.src = songData[index].src;
+            document.getElementById('trackTitle').innerText = songData[index].title;
+            document.getElementById('trackCover').src = songData[index].cover;
+            document.getElementById('trackQuote').innerText = songData[index].quote;
             
-            <div class="w-12 h-12 bg-white rounded-xl overflow-hidden shrink-0 shadow-inner relative z-10">
-                <img src="${s.cover}" class="w-full h-full object-cover">
-            </div>
-            
-            <div class="flex-1 text-left overflow-hidden relative z-10">
-                <p class="font-black text-[14px] truncate tracking-tight">${s.title}</p>
-                <div class="flex items-center gap-1">
-                    <span class="text-[10px] opacity-70 font-bold">Listen with love</span>
-                    <span class="text-[12px] animate-pulse">🎀</span>
-                </div>
-            </div>
-
-            <div class="text-xl animate-pulse group-hover:rotate-12 transition-transform">🎀</div>
-        `;
-        
-        div.onclick = () => { 
-            loadTrack(i); 
-            audio.play(); 
-            playPauseBtn.innerHTML = svgPause; 
-            document.getElementById('playerWrapper').classList.add('playing');
-            // Efek klik tambahan: Confetti kecil warna pink
-            confetti({
-                particleCount: 20,
-                spread: 30,
-                origin: { y: 0.8 },
-                colors: ['#ff85a2', '#fb6f92']
+            document.querySelectorAll('.playlist-item').forEach((el, i) => {
+                el.style.background = (i === index) ? "linear-gradient(90deg, #ff85a2, #fb6f92)" : "rgba(255, 255, 255, 0.6)";
+                el.style.color = (i === index) ? "white" : "#be185d";
+                if(i === index) el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             });
-        };
-        container.appendChild(div);
-    });
-}
+        }
+
+        function togglePlayPause() {
+            if (audio.paused) {
+                audio.play();
+                playPauseBtn.innerHTML = svgPause;
+                document.getElementById('playerWrapper').classList.add('playing');
+            } else {
+                audio.pause();
+                playPauseBtn.innerHTML = svgPlay;
+                document.getElementById('playerWrapper').classList.remove('playing');
+            }
+        }
+
+        function nextTrack() { currentTrackIndex = (currentTrackIndex + 1) % songData.length; loadTrack(currentTrackIndex); audio.play(); playPauseBtn.innerHTML = svgPause; }
+        function prevTrack() { currentTrackIndex = (currentTrackIndex - 1 + songData.length) % songData.length; loadTrack(currentTrackIndex); audio.play(); playPauseBtn.innerHTML = svgPause; }
+
+        audio.addEventListener('timeupdate', () => {
+            if (!isNaN(audio.duration)) {
+                progressBar.value = (audio.currentTime / audio.duration) * 100;
+                const curM = Math.floor(audio.currentTime / 60); const curS = Math.floor(audio.currentTime % 60);
+                const durM = Math.floor(audio.duration / 60); const durS = Math.floor(audio.duration % 60);
+                currentTimeEl.innerText = `${curM}:${curS < 10 ? '0'+curS : curS}`;
+                durationEl.innerText = `${durM}:${durS < 10 ? '0'+durS : durS}`;
+            }
+        });
+
+        progressBar.addEventListener('input', () => audio.currentTime = (progressBar.value / 100) * audio.duration);
+        volumeSlider.addEventListener('input', () => audio.volume = volumeSlider.value);
+        audio.addEventListener('ended', nextTrack);
+
+        function toggleMusic() {
+            audio.muted = !audio.muted;
+            document.getElementById('speaker-icon').innerText = audio.muted ? "🔇" : "🔊";
+        }
+
+        function checkMultiPass() {
+            if (validPasswords.includes(document.getElementById('secretPass').value.toLowerCase().trim())) {
+                document.getElementById('password-gate').classList.add('animate__animated', 'animate__fadeOutDown');
+                setTimeout(() => {
+                    document.getElementById('password-gate').classList.add('hidden');
+                    document.getElementById('secret-content').classList.remove('hidden');
+                    document.getElementById('secret-content').style.display = 'flex';
+                    document.getElementById('secret-content').style.flexDirection = 'column';
+                    document.getElementById('secret-content').style.alignItems = 'center';
+                    confetti();
+                }, 500);
+            } else { alert("Password salah sayang, cek kado hint nya! 😋"); }
+        }
+
+        function togglePassVisibility() {
+            const p = document.getElementById('secretPass');
+            p.type = p.type === "password" ? "text" : "password";
+            document.getElementById('eye-icon').innerText = p.type === "password" ? "👁️‍🗨️" : "🔒";
+        }
+
+        function openHintAnim() {
+            document.getElementById('hint-gift').innerText = "💖";
+            document.getElementById('hint-text').classList.remove('hidden');
+        }
+
+        function unlockEverything() {
+            const n = document.getElementById('inputNama').value;
+            if(!n) return alert("Panggilannya diisi dulu sayang! 🎀");
+            document.getElementById('userNameDisplay').innerText = n;
+            document.getElementById('welcome-screen').classList.add('animate__animated', 'animate__fadeOutUp');
+            
+            document.getElementById('music-toggle').style.display = 'flex';
+            loadTrack(0);
+            audio.play().catch(() => console.log("Play blocked"));
+            playPauseBtn.innerHTML = svgPause;
+
+            setTimeout(() => {
+                document.getElementById('welcome-screen').style.display = 'none';
+                document.getElementById('main-nav').classList.remove('hidden');
+                animateTitle(); initPlaylist();
+                setInterval(createFallingItem, 400);
+                confetti();
+            }, 800);
+        }
+
+        function initPlaylist() {
+            const container = document.getElementById('playlistContainer');
+            container.innerHTML = "";
+            songData.forEach((s, i) => {
+                const div = document.createElement('div');
+                div.className = `playlist-item p-3 rounded-[20px] flex items-center gap-3 cursor-pointer border border-white/40 shadow-sm transition-all duration-300 relative overflow-hidden`;
+                div.innerHTML = `
+                    <div class="absolute -right-1 -top-1 opacity-10 text-lg">🧸</div>
+                    <div class="w-10 h-10 bg-white rounded-lg overflow-hidden shrink-0 shadow-inner relative z-10">
+                        <img src="${s.cover}" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex-1 text-left overflow-hidden relative z-10">
+                        <p class="font-bold text-[13px] leading-tight text-pink-800 break-words line-clamp-2">${s.title}</p>
+                        <p class="text-[9px] opacity-60 font-bold uppercase tracking-widest">Song #${i+1}</p>
+                    </div>
+                    <div class="text-lg shrink-0">🎀</div>
+                `;
+                div.onclick = () => { loadTrack(i); audio.play(); playPauseBtn.innerHTML = svgPause; confetti({particleCount:10, origin:{y:0.8}, colors:['#ff85a2']}); };
+                container.appendChild(div);
+            });
+        }
+
+        function zoomPhoto(img, title, text) {
+            document.getElementById('modal-img').src = img;
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-text').innerText = text;
+            document.getElementById('photo-modal').style.display = 'flex';
+        }
+        function closeModal() { document.getElementById('photo-modal').style.display = 'none'; }
+
+        function animateTitle() {
+            const title = "Happy New Year";
+            const container = document.getElementById('animatedTitle');
+            if(!container) return;
+            container.innerHTML = "";
+            title.split("").forEach((char, i) => {
+                const span = document.createElement('span');
+                span.innerText = char === " " ? "\u00A0" : char;
+                span.className = "letter text-4xl";
+                span.style.animationDelay = `${i * 0.1}s`;
+                container.appendChild(span);
+            });
+        }
+
+        function createFallingItem() {
+            const items = ['🧸', '🎀', '💖', '🌸'];
+            const item = document.createElement('div');
+            item.className = 'falling-item';
+            item.innerHTML = items[Math.floor(Math.random() * items.length)];
+            item.style.left = Math.random() * 90 + 'vw';
+            item.style.fontSize = '22px';
+            item.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            document.body.appendChild(item);
+            setTimeout(() => item.remove(), 7000);
+        }
+
+        function clickSpawn(e) {
+            const icon = document.createElement('div');
+            icon.style.position = 'fixed'; icon.style.zIndex = '9999'; icon.innerText = '💖';
+            icon.style.left = e.clientX + 'px'; icon.style.top = e.clientY + 'px';
+            icon.style.pointerEvents = 'none';
+            icon.classList.add('animate__animated', 'animate__zoomOutUp');
+            document.body.appendChild(icon);
+            setTimeout(() => icon.remove(), 1000);
+        }
         </script>
     </body>
 </html>
-
+</body>
+</html>
+</body>
+</html>
